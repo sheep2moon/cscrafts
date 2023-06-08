@@ -1,4 +1,4 @@
-import { Weapon } from "../types/global";
+import { WeaponSkin } from "../types/global";
 
 export const apiUrl = process.env.apiUrl as string;
 
@@ -8,13 +8,13 @@ export const getWeaponTypes = async (): Promise<string[]> => {
     return data;
 };
 
-export const getWeaponNames = async (weapon_type: string): Promise<string[]> => {
+export const getWeaponNames = async (weapon_type: string): Promise<{ name: string; img_src: string }[]> => {
     const res = await fetch(apiUrl + "/weapons?weapon_type=" + weapon_type);
     return await res.json();
 };
 
-export const getWeaponSkins = async (weapon_type: string, weapon_name: string): Promise<Weapon[]> => {
+export const getWeaponSkins = async (weapon_type: string, weapon_name: string): Promise<WeaponSkin[]> => {
     const res = await fetch(apiUrl + "/weapon-skins?weapon_type=" + weapon_type + "&weapon_name=" + weapon_name);
-    const data: Weapon[] = await res.json();
+    const data: WeaponSkin[] = await res.json();
     return data;
 };

@@ -9,32 +9,13 @@ export type StickersData = {
     };
 };
 
-export type Weapon = {
+export type WeaponSkin = {
     name: string;
     img_src: string;
 };
 
 export type WeaponsData = {
     data: {
-        pistols: [
-            {
-                [key: string]: Weapon;
-            }
-        ];
-        rifles: [
-            {
-                [key: string]: Weapon;
-            }
-        ];
-        smgs: [
-            {
-                [key: string]: Weapon;
-            }
-        ];
-        heavy: [
-            {
-                [key: string]: Weapon;
-            }
-        ];
+        [key: string]: WeaponSkin;
     };
 };
