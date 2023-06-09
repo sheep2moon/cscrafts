@@ -9,7 +9,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 params: collection_name
 /sticker-collection
 
-params: collection_name?, query
+params: collection_name?, query  
 /sticker-search
 
 # Weapons

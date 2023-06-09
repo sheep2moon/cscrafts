@@ -1,8 +1,9 @@
 import { apiUrl } from "./get-weapons";
 
-export const getStickerCollections = async () => {
+export const getStickerCollections = async (): Promise<string[]> => {
     const res = await fetch(apiUrl + "/sticker-collections");
-    return await res.json();
+    const collections: string[] = await res.json();
+    return collections;
 };
 
 export const getStickerCollection = async (collection_name: string) => {
