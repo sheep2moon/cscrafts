@@ -5,7 +5,7 @@ const nextConfig = {
         apiUrl: "http://139.59.143.147/cscrafts"
     },
     images: {
-        domains: ["steamcdn-a.akamaihd.net", "csgostash.com"]
+        domains: ["steamcdn-a.akamaihd.net", "steamcommunity-a.akamaihd.net", "csgostash.com"]
     }
 };
 

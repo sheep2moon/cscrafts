@@ -43,7 +43,7 @@ const WeaponSelector = () => {
                 {weaponTypes.isSuccess &&
                     weaponTypes.data.map(weaponType => (
                         <div
-                            className={clsx("p-2 w-full text-center rounded-sm text-xl text-white/60", { "outline  bg-slate-600/20 outline-slate-300/20 text-white  ": selectedWeaponType === weaponType })}
+                            className={clsx("p-2 w-full cursor-pointer text-center rounded-sm text-xl text-white/60", { "outline  bg-slate-600/20 outline-slate-300/20 text-white  ": selectedWeaponType === weaponType })}
                             onClick={() => handleWeaponTypeSelect(weaponType)}
                             key={weaponType}
                         >
@@ -52,7 +52,7 @@ const WeaponSelector = () => {
                     ))}
             </div>
             <div className="grid grid-cols-3">
-                <div className="col-span-1 max-h-[400px] overflow-y-scroll flex flex-col">
+                <div className="col-span-1 scrollbar scrollbar-track-gray-800 scrollbar-thumb-gray-900 max-h-[400px] overflow-y-scroll flex flex-col">
                     <div className="grid grid-cols-1 gap-2">
                         {weaponNames.isSuccess &&
                             weaponNames.data.map(weapon => (
@@ -69,7 +69,7 @@ const WeaponSelector = () => {
                             ))}
                     </div>
                 </div>
-                <div className="col-span-2 grid grid-cols-4 bg-slate-900/10 max-h-[400px] overflow-y-scroll p-2 gap-2">
+                <div className="col-span-2 grid grid-cols-4 bg-slate-900/10 max-h-[400px] overflow-y-scroll scrollbar scrollbar-track-gray-800 scrollbar-thumb-gray-900 p-2 gap-2">
                     {weaponSkins.data?.map(skin => (
                         <div className={clsx("flex flex-col items-center justify-center gap-2", { "bg-slate-600/20 outline outline-slate-300/20": selectedSkin?.name === skin.name })} key={skin.name} onClick={() => setSelectedSkin(skin)}>
                             <div className="relative w-24 h-24">
