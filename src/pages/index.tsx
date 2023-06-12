@@ -2,7 +2,9 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { StickersData, WeaponsData } from "../types/global";
 import StickersSelector from "../components/homepage/StickersSelector";
+import WeaponSkinsSelector from "../components/homepage/WeaponSkinsSelector";
 import WeaponSelector from "../components/homepage/WeaponSelector";
+import CraftSummary from "../components/homepage/CraftSummary";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +18,9 @@ export default function Home() {
         <main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
             <div className="z-10 w-full max-w-5xl font-mono text-sm flex flex-col">
                 <WeaponSelector />
+                {/* <WeaponSkinsSelector /> */}
                 <StickersSelector />
+                <CraftSummary />
             </div>
         </main>
     );

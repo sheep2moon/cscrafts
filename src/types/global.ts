@@ -9,6 +9,11 @@ export type StickersData = {
     };
 };
 
+export type Weapon = {
+    name: string;
+    img_src: string;
+};
+
 export type WeaponSkin = {
     name: string;
     img_src: string;
