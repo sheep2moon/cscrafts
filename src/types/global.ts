@@ -24,3 +24,9 @@ export type WeaponsData = {
         [key: string]: WeaponSkin;
     };
 };
+
+export type Craft = {
+    weapon: string;
+    exteriors: number[];
+    stickers: Array<Sticker | null>;
+};

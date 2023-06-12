@@ -7,6 +7,7 @@ import type { GetStaticProps } from "next";
 import { getStickerCollection, getStickerCollections } from "../../call-api/get-stickers";
 import clsx from "clsx";
 import Image from "next/image";
+import { useCraftsStore } from "../../state-store/craftStore";
 
 type StickersSelectorProps = { stickersData: StickersData };
 
@@ -18,6 +19,8 @@ const StickersSelector = () => {
     const handleSelectCollection = (collectionName: string) => {
         setSelectedCollection(collectionName);
     };
+
+    const { addSticker } = useCraftsStore(state => state);
 
     return (
         <div className="w-full grid grid-cols-3 mt-8">
@@ -35,9 +38,9 @@ const StickersSelector = () => {
             </div>
             <div className="col-span-2 grid grid-cols-4 bg-slate-900/10 max-h-[400px] overflow-y-scroll p-2 scrollbar scrollbar-track-gray-800 scrollbar-thumb-gray-900 gap-2">
                 {stickerCollection.data?.map((sticker: Sticker) => (
-                    <div className="flex flex-col items-center  justify-center gap-2" key={sticker.name}>
+                    <div onClick={() => addSticker(sticker)} className="flex flex-col items-center  justify-center gap-2" key={sticker.name}>
                         <div className="relative w-24 h-24">
-                            <Image src={sticker.img_src} className="w-auto h-auto" fill alt="weapon skin" sizes="24" />
+                            <Image src={sticker.img_src} className="w-auto h-auto" fill alt="weapon skin" />
                         </div>
                         <h4>{sticker.name}</h4>
                     </div>

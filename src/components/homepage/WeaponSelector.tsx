@@ -31,7 +31,7 @@ const weaponTypes = [
 
 const WeaponSelector = () => {
     const [selectedWeaponType, setSelectedWeaponType] = useState(weaponTypes[0].name);
-    const { selectedWeapon, stickers, setSticker, setSelectedWeapon } = useCraftsStore(state => state);
+    const { selectedWeapon, setSelectedWeapon } = useCraftsStore(state => state);
     const weaponNames = useQuery(["weapon-names", selectedWeaponType], () => getWeaponNames(selectedWeaponType), {
         enabled: !!selectedWeaponType
     });
