@@ -29,4 +29,5 @@ export type Craft = {
     weapon: string;
     exteriors: number[];
     stickers: Array<Sticker | null>;
+    exterior_tag: string;
 };

@@ -1,6 +1,6 @@
 import { Craft, Sticker } from "../types/global";
 
-export const weaponsTag = {
+export const exteriorTags = {
     stattrak: "tag_strange",
     souvenir: "tag_tournament",
     any: ""
@@ -23,7 +23,7 @@ export const searchCraft = async (craft: Craft) => {
         "&category_730_Weapon%5B%5D=tag_weapon_" +
         craft.weapon.toLowerCase() +
         "&category_730_Quality%5B%5D=" +
-        weaponsTag.any +
+        exteriorTags.any +
         "#p1_price_asc";
 
     const res = await fetch(searchQuery);

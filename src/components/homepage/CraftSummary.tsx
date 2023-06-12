@@ -2,7 +2,13 @@ import React from "react";
 import { useCraftsStore } from "../../state-store/craftStore";
 import Image from "next/image";
 import { Craft } from "../../types/global";
-import { searchCraft } from "../../helpers/call-steam-market";
+import { searchCrafts } from "../../call-api/post-search-craft";
+
+export const exteriorTags = {
+    stattrak: "tag_strange",
+    souvenir: "tag_tournament",
+    any: ""
+};
 
 const CraftSummary = () => {
     const { selectedWeapon, stickerSlots, setSelectedWeapon } = useCraftsStore(state => state);
@@ -11,9 +17,10 @@ const CraftSummary = () => {
         const craft: Craft = {
             stickers: stickerSlots.map(slot => slot.sticker),
             exteriors: [0, 1, 2, 3],
-            weapon: selectedWeapon?.name || ""
+            weapon: selectedWeapon?.name || "",
+            exterior_tag: exteriorTags.any
         };
-        searchCraft(craft);
+        searchCrafts(craft);
     };
 
     return (
