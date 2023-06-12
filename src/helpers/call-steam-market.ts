@@ -6,47 +6,37 @@ export const weaponsTag = {
     any: ""
 };
 
-export const searchCraft = (craft: Craft) => {
-    window.open(generateSearchstring(craft), "_blank");
-};
-
-const ex =
-    "https://steamcommunity.com/market/search?q=%22FaZe%20Clan%20Paris%202023%22&descriptions=1&category_730_ItemSet%5B%5D=any&category_730_Exterior%5B%5D=tag_WearCategory0&category_730_Weapon%5B%5D=tag_weapon_ak47&category_730_Quality%5B%5D=tag_strange#p1_price_asc";
-
-const getExteriorParams = (exteriors: number[]) => {
-    let query = "";
-    exteriors.forEach(wearCategory => {
-        query += `&category_730_Exterior%5B%5D=tag_WearCategory${wearCategory}`;
-    });
-
-    return query;
-};
-
-const getStickersParams = (stickers: Array<Sticker | null>) => {
-    const stickerNames = stickers.map(sticker => {
+export const searchCraft = async (craft: Craft) => {
+    const stickerNames = craft.stickers.map(sticker => {
         if (sticker) return sticker.name;
     });
-    let query = stickerNames.join(",");
-    return encodeURI(query);
-    // stickers.forEach((sticker, index) => {
-    //     query += encodeURI(sticker.name);
-    //     if (index + 1 < stickers.length) {
-    //         query += ",";
-    //     }
-    //     query += "%22";
-    // });
-};
+    const stickerQuery = stickerNames.join(",");
 
-function generateSearchstring(craft: Craft) {
-    return (
+    const exteriorQueries = craft.exteriors.map(wearCategory => `&category_730_Exterior%5B%5D=tag_WearCategory${wearCategory}`);
+    const exteriorQuery = exteriorQueries.join("");
+
+    const searchQuery =
         'http://steamcommunity.com/market/search?q="' +
-        getStickersParams(craft.stickers) +
+        encodeURI(stickerQuery) +
         '"&descriptions=1&category_730_ItemSet%5B%5D=any' +
-        getExteriorParams(craft.exteriors) +
+        exteriorQuery +
         "&category_730_Weapon%5B%5D=tag_weapon_" +
         craft.weapon.toLowerCase() +
         "&category_730_Quality%5B%5D=" +
         weaponsTag.any +
-        "#p1_price_asc"
-    );
-}
+        "#p1_price_asc";
+
+    const res = await fetch(searchQuery);
+    const html = await res.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const resultDivs = doc.querySelectorAll(".market_listing_searchresult");
+    resultDivs.forEach(resultDiv => {
+        const content = resultDiv.textContent;
+        console.log(content);
+        console.log(resultDiv);
+    });
+
+    // window.open(searchQuery, "_blank");
+};
