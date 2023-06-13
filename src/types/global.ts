@@ -12,6 +12,7 @@ export type StickersData = {
 export type Weapon = {
     name: string;
     img_src: string;
+    tag: string;
 };
 
 export type WeaponSkin = {
@@ -26,8 +27,8 @@ export type WeaponsData = {
 };
 
 export type Craft = {
-    weapon: string;
+    weapon_tag: string;
     exteriors: number[];
-    stickers: Array<Sticker | null>;
-    exterior_tag: string;
+    stickers: Array<string>;
+    type_tag: string;
 };

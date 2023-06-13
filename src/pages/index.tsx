@@ -5,6 +5,7 @@ import StickersSelector from "../components/homepage/StickersSelector";
 import WeaponSkinsSelector from "../components/homepage/WeaponSkinsSelector";
 import WeaponSelector from "../components/homepage/WeaponSelector";
 import CraftSummary from "../components/homepage/CraftSummary";
+import SignIn from "../components/homepage/SignIn";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,8 @@ type HomeProps = {
 
 export default function Home() {
     return (
-        <main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
+        <main className={`flex min-h-screen flex-col items-center justify-between p-4 ${inter.className}`}>
+            <SignIn />
             <div className="z-10 w-full max-w-5xl font-mono text-sm flex flex-col">
                 <WeaponSelector />
                 {/* <WeaponSkinsSelector /> */}
