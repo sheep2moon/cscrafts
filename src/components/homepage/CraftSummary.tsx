@@ -4,38 +4,44 @@ import Image from "next/image";
 import { Craft } from "../../types/global";
 import { searchCrafts } from "../../call-api/post-search-craft";
 import Checkbox from "../common/Checkbox";
+import { supabase } from "../../supabase";
+import { Session } from "@supabase/gotrue-js/src/lib/types";
+import { exteriorsTags, typeTags } from "../../constants/search-query-tags";
 
-export const typeTags = [
-    { title: "Any", tag: "" },
-    { title: "StatTrak", tag: "tag_strange" },
-    { title: "Souvenir", tag: "tag_tournament" }
-];
-
-export const exteriorsTags = [
-    { value: false, title: "FN" },
-    { value: false, title: "MW" },
-    { value: false, title: "FT" },
-    { value: false, title: "WW" },
-    { value: false, title: "BS" }
-];
-
-export const CraftSummary = () => {
+export const CraftSummary = ({ session }: { session: Session | null }) => {
     const [exteriors, setExteriors] = useState(exteriorsTags);
     const [selectedTypeTag, setSelectedTypeTag] = useState(typeTags[0].tag);
+
     const { selectedWeapon, stickerSlots, removeSticker } = useCraftsStore(state => state);
 
     const handleSearch = () => {
-        if (selectedWeapon && stickerSlots) {
-            const craft: Craft = {
-                stickers: stickerSlots.map(slot => slot.sticker?.name || ""),
-                exteriors: [...exteriors.map((ex, index) => (ex.value ? index : null))].filter((v): v is number => v !== null),
-                weapon_tag: selectedWeapon.tag,
-                type_tag: typeTags[2].tag
-            };
-            console.log(craft);
-            // const queryString =
-            // searchCrafts(craft);
+        const craft: Craft = {
+            stickers: stickerSlots.map(slot => slot.sticker?.name || ""),
+            exteriors: [...exteriors.map((ex, index) => (ex.value ? index : null))].filter((v): v is number => v !== null),
+            weapon_tag: selectedWeapon?.tag || "any",
+            type_tag: typeTags[2].tag
+        };
+        console.log(craft);
+        // const queryString =
+        // searchCrafts(craft);
+    };
+
+    const handleAddToList = async () => {
+        const userId = session?.user.id;
+
+        const newCraft = {
+            owner_id: userId,
+            exteriors: exteriors.some(e => e.value) ? [...exteriors.map((ex, index) => (ex.value ? index : null))].filter((v): v is number => v !== null) : [0, 1, 2, 3, 4],
+            stickers: stickerSlots.map(slot => slot.sticker?.name || ""),
+            type_tag: typeTags[2].tag,
+            weapon_tag: selectedWeapon?.tag || "any"
+        };
+
+        const res = await supabase.from("crafts").insert([newCraft]);
+        if (res.status === 201) {
+            console.log("Successfuly added to list");
         }
+        console.log(res);
     };
 
     const handleExteriorChange = (index: number) => {
@@ -93,7 +99,11 @@ export const CraftSummary = () => {
                     <button onClick={() => handleSearch()} className="p-4 bg-indigo-800 rounded-sm">
                         Search
                     </button>
-                    <button className="p-4 bg-indigo-800 rounded-sm">Add to list</button>
+                    {session?.user && (
+                        <button onClick={() => handleAddToList()} className="p-4 bg-indigo-800 rounded-sm">
+                            Add to list
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@ export const exteriorTags = {
 
 export const searchCraft = async (craft: Craft) => {
     const stickerNames = craft.stickers.map(sticker => {
-        if (sticker) return sticker.name;
+        if (sticker) return sticker;
     });
     const stickerQuery = stickerNames.join(",");
 
@@ -21,7 +21,7 @@ export const searchCraft = async (craft: Craft) => {
         '"&descriptions=1&category_730_ItemSet%5B%5D=any' +
         exteriorQuery +
         "&category_730_Weapon%5B%5D=tag_weapon_" +
-        craft.weapon.toLowerCase() +
+        craft.weapon_tag +
         "&category_730_Quality%5B%5D=" +
         exteriorTags.any +
         "#p1_price_asc";
