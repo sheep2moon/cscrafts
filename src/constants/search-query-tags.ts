@@ -1,5 +1,5 @@
 export const typeTags = [
-    { title: "Any", tag: "" },
+    { title: "Any", tag: "any" },
     { title: "StatTrak", tag: "tag_strange" },
     { title: "Souvenir", tag: "tag_tournament" }
 ];

@@ -40,7 +40,7 @@ const StickersSelector = () => {
                 {stickerCollection.data?.map((sticker: Sticker) => (
                     <div onClick={() => addSticker(sticker)} className="flex flex-col items-center  justify-center gap-2" key={sticker.name}>
                         <div className="relative w-24 h-24">
-                            <Image src={sticker.img_src} className="w-auto h-auto" fill alt="weapon skin" />
+                            <Image src={sticker.img_src} className="w-auto h-auto" sizes="24rem" fill alt="weapon skin" />
                         </div>
                         <h4>{sticker.name}</h4>
                     </div>

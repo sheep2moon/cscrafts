@@ -32,3 +32,10 @@ export type Craft = {
     stickers: Array<string>;
     type_tag: string;
 };
+
+export type CraftResult = {
+    name: string;
+    price: string;
+    img_src: string;
+    market_url: string;
+};

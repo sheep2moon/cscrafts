@@ -37,12 +37,6 @@ const WeaponSelector = () => {
         enabled: !!selectedWeaponType
     });
 
-    useEffect(() => {
-        Object.keys(weaponCategories).map(key => {
-            console.log(key, weaponCategories[key]);
-        });
-    }, []);
-
     return (
         <>
             <div className="flex flex-col">
@@ -69,7 +63,7 @@ const WeaponSelector = () => {
                         >
                             <h3>{weapon.name}</h3>
                             <div className="w-16 relative aspect-square">
-                                <Image src={weapon.img_src} fill alt="weapon default skin" />
+                                <Image sizes="16rem" src={weapon.img_src} fill alt="weapon default skin" />
                             </div>
                         </div>
                     ))}
