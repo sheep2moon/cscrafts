@@ -38,4 +38,6 @@ export type CraftResult = {
     price: string;
     img_src: string;
     market_url: string;
+    lowest_price: string;
+    median_price: string;
 };

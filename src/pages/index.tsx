@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../supabase";
 import { Session } from "@supabase/gotrue-js/src/lib/types";
 import Account from "../components/homepage/Account";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,14 +31,16 @@ export default function Home() {
     }, []);
 
     return (
-        <main className={`flex min-h-screen flex-col items-center justify-between p-4 ${inter.className}`}>
-            {session ? <Account session={session} /> : <AuthModals />}
-            <div className="mt-12 w-full max-w-5xl font-mono text-sm flex flex-col">
-                <WeaponSelector />
-                <StickersSelector />
-                <CraftSummary session={session} />
-            </div>
-        </main>
+        <>
+            <main className={`flex min-h-screen flex-col items-center justify-between p-4 ${inter.className}`}>
+                {session ? <Account session={session} /> : <AuthModals />}
+                <div className="mt-12 w-full max-w-5xl font-mono text-sm flex flex-col">
+                    <WeaponSelector />
+                    <StickersSelector />
+                    <CraftSummary session={session} />
+                </div>
+            </main>
+        </>
     );
 }
 

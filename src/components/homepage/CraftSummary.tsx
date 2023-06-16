@@ -12,7 +12,7 @@ import CraftResults from "../crafts/CraftResults";
 export const CraftSummary = ({ session }: { session: Session | null }) => {
     const [exteriors, setExteriors] = useState(exteriorsTags);
     const [selectedTypeTag, setSelectedTypeTag] = useState(typeTags[0].tag);
-    const [searchResults, setSearchResults] = useState<CraftResult[] | false>([]);
+    const [searchResults, setSearchResults] = useState<CraftResult[] | null>([]);
     const [searchLoading, setSearchLoading] = useState(false);
 
     const { selectedWeapon, stickerSlots, removeSticker } = useCraftsStore(state => state);
