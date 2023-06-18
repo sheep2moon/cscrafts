@@ -9,7 +9,7 @@ type StickerSlot = {
 type CraftsStore = {
     selectedWeapon: Weapon | null;
     stickerSlots: Array<StickerSlot>;
-    setSelectedWeapon: (weapon: Weapon) => void;
+    setSelectedWeapon: (weapon: Weapon | null) => void;
     addSticker: (sticker: Sticker) => void;
     removeSticker: (slotIndex: number) => void;
 };

@@ -15,7 +15,7 @@ export const CraftSummary = ({ session }: { session: Session | null }) => {
     const [searchResults, setSearchResults] = useState<CraftResult[] | null>([]);
     const [searchLoading, setSearchLoading] = useState(false);
 
-    const { selectedWeapon, stickerSlots, removeSticker } = useCraftsStore(state => state);
+    const { selectedWeapon, stickerSlots, removeSticker, setSelectedWeapon } = useCraftsStore(state => state);
 
     const handleSearch = async () => {
         setSearchLoading(true);
@@ -82,19 +82,28 @@ export const CraftSummary = ({ session }: { session: Session | null }) => {
                 <div className="grid grid-cols-5 gap-4 mt-4 mx-auto">
                     <div className="flex flex-col rounded-md justify-center items-center bg-slate-600/10">
                         {/*TODO: ADD DEFAULT IMAGE? */}
-                        <div className="relative w-20 aspect-square ">{selectedWeapon?.img_src && <Image src={selectedWeapon.img_src} alt="weapon" fill />}</div>
-                        <h4 className="text-lg text-center">{selectedWeapon?.name}</h4>
+                        {selectedWeapon ? (
+                            <div className="flex flex-col justify-center items-center" onClick={() => setSelectedWeapon(null)}>
+                                <div className="relative w-20 aspect-square ">{selectedWeapon.img_src && <Image src={selectedWeapon.img_src} alt="weapon" fill />}</div>
+                                <h4 className="text-lg text-center">{selectedWeapon.name}</h4>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="relative w-20 aspect-square"></div>
+                                <h4>ANY</h4>
+                            </>
+                        )}
                     </div>
                     <div className="grid col-span-3 grid-cols-4 gap-2">
                         {stickerSlots.map((stickerSlot, slotIndex) => (
-                            <div onClick={() => removeSticker(slotIndex)} key={stickerSlot.id} className="rounded-md bg-slate-600/20 w-32 aspect-square flex flex-col items-center justify-center">
+                            <div onClick={() => removeSticker(slotIndex)} key={stickerSlot.id} className="rounded-md bg-slate-600/20 w-36 aspect-square flex flex-col items-center justify-center">
                                 {stickerSlot.sticker && (
                                     <>
                                         {" "}
                                         <div className="relative w-20 aspect-square">
                                             <Image fill alt="sticker preview" src={stickerSlot.sticker.img_src} />
                                         </div>
-                                        <h4 className="text-center text-base">{stickerSlot.sticker.name}</h4>
+                                        <h4 className="text-center text-sm">{stickerSlot.sticker.name}</h4>
                                     </>
                                 )}
                             </div>
