@@ -39,8 +39,8 @@ const WeaponSelector = () => {
 
     return (
         <>
-            <div className="flex flex-col">
-                <div className="flex items-center justify-around mb-8">
+            <div className="flex flex-col bg-primary-800 text-white p-2">
+                <div className="flex items-center justify-around mb-4">
                     {Object.keys(weaponCategories).map(weaponType => (
                         <div
                             key={weaponType}
@@ -54,10 +54,10 @@ const WeaponSelector = () => {
                         </div>
                     ))}
                 </div>
-                <div className="col-span-2 grid grid-cols-6  gap-2 items-start justify-start content-start transition-all h-[200px]">
+                <div className="col-span-2 grid grid-cols-6  gap-2 items-start justify-start content-start transition-all">
                     {weaponCategories[selectedWeaponType].weapons.map(weapon => (
                         <div
-                            className={clsx("hover:bg-slate-600/10  flex flex-col justify-center items-center rounded-sm ", { "bg-slate-600/20 outline outline-slate-300/20 ": selectedWeapon?.name === weapon.name })}
+                            className={clsx("hover:bg-primary-700  flex flex-col justify-center items-center rounded-sm ", { "bg-primary-600/20 outline outline-accent-300/50 ": selectedWeapon?.name === weapon.name })}
                             onClick={() => setSelectedWeapon(weapon)}
                             key={weapon.name}
                         >

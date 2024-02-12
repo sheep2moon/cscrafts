@@ -9,32 +9,47 @@ import { Session } from "@supabase/gotrue-js/src/lib/types";
 import { exteriorsTags, typeTags } from "../../constants/search-query-tags";
 import CraftResults from "../crafts/CraftResults";
 
-export const CraftSummary = ({ session }: { session: Session | null }) => {
+export const CraftSummary = () => {
     const [exteriors, setExteriors] = useState(exteriorsTags);
     const [selectedTypeTag, setSelectedTypeTag] = useState(typeTags[0].tag);
     const [searchResults, setSearchResults] = useState<CraftResult[] | null>([]);
-    const [searchLoading, setSearchLoading] = useState(false);
 
     const { selectedWeapon, stickerSlots, removeSticker, setSelectedWeapon } = useCraftsStore(state => state);
 
     const handleSearch = async () => {
-        setSearchLoading(true);
-        const craft: Craft = {
-            stickers: stickerSlots.map(slot => slot.sticker?.name || ""),
-            exteriors: [...exteriors.map((ex, index) => (ex.value ? index : null))].filter((v): v is number => v !== null),
-            weapon_tag: selectedWeapon?.tag || "any",
-            type_tag: selectedTypeTag
-        };
-        const results = await searchCrafts(craft);
-        setSearchResults(results);
-        setSearchLoading(false);
+        // setSearchLoading(true);
+        // const craft: Craft = {
+        //     stickers: stickerSlots.map(slot => slot.sticker?.name || ""),
+        //     exteriors: [...exteriors.map((ex, index) => (ex.value ? index : null))].filter((v): v is number => v !== null),
+        //     weapon_tag: selectedWeapon?.tag || "any",
+        //     type_tag: selectedTypeTag
+        // };
+        // const results = await searchCrafts(craft);
+        // setSearchResults(results);
+        // setSearchLoading(false);
+        console.log(stickerSlots);
+        const sticker_query = stickerSlots.map(slot => slot.sticker?.name).join(",");
+
+        const exterior_query = [...exteriors.map((ex, index) => (ex.value ? index : null))]
+            .filter((v): v is number => v !== null)
+            .map(exterior => `&category_730_Exterior%5B%5D=tag_WearCategory${exterior}`)
+            .join("");
+        const weapon_tag = selectedWeapon?.tag ? selectedWeapon.tag : "any";
+        const searchQuery =
+            "http://steamcommunity.com/market/search?q=%22" +
+            encodeURIComponent(sticker_query) +
+            "%22&descriptions=1&category_730_ItemSet%5B%5D=any" +
+            exterior_query +
+            "&category_730_Weapon%5B%5D=" +
+            weapon_tag +
+            "&category_730_Quality%5B%5D=" +
+            selectedTypeTag +
+            "#p1_price_asc";
+        window.open(searchQuery, "_blank");
     };
 
     const handleAddToList = async () => {
-        const userId = session?.user.id;
-
         const newCraft = {
-            owner_id: userId,
             exteriors: exteriors.some(e => e.value) ? [...exteriors.map((ex, index) => (ex.value ? index : null))].filter((v): v is number => v !== null) : [0, 1, 2, 3, 4],
             stickers: stickerSlots.map(slot => slot.sticker?.name || ""),
             type_tag: selectedTypeTag,
@@ -110,14 +125,12 @@ export const CraftSummary = ({ session }: { session: Session | null }) => {
                         ))}
                     </div>
                     <div className="flex flex-col gap-2 justify-center">
-                        <button disabled={searchLoading} onClick={() => handleSearch()} className="p-4 bg-indigo-800 rounded-sm">
-                            {searchLoading ? "Loading" : "Search"}
+                        <button onClick={() => handleSearch()} className="p-4 bg-indigo-800 rounded-sm">
+                            Search
                         </button>
-                        {session?.user && (
-                            <button onClick={() => handleAddToList()} className="p-4 bg-indigo-800 rounded-sm">
-                                Add to list
-                            </button>
-                        )}
+                        <button onClick={() => handleAddToList()} className="p-4 bg-indigo-800 rounded-sm">
+                            Add to list
+                        </button>
                     </div>
                 </div>
             </div>

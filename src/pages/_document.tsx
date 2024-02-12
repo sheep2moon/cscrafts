@@ -1,14 +1,13 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import Link from "next/link";
+import Nav from "../components/nav";
 
 export default function Document() {
     return (
         <Html lang="en">
             <Head />
             <body>
-                <nav className="flex gap-2">
-                    <Link href="/">home</Link>
-                </nav>
+                <Nav />
                 <Main />
                 <NextScript />
             </body>
